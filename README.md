@@ -1,4 +1,5 @@
 # sbot-conversation
+A conversation session implement for [hubot](https://github.com/hubotio/hubot).
 
 The conversation with the user is built around the concept of message models.
 
