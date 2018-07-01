@@ -1,8 +1,6 @@
 # sbot-conversation
 A conversation session implement for [hubot](https://github.com/hubotio/hubot).
 
-The conversation with the user is built around the concept of message models.
-
 ## Installation
 ```bash
 npm install sbot-conversation
@@ -11,12 +9,17 @@ npm install sbot-conversation
 - conversation
 - conversation manager
 
+## Example
+
 ## Usage
 
 ### Create a conversation manager instance
+
+### Create a conversation
+
 There are there pattern to create a conversation.
 
-### First pattern: Init a json schema
+#### First pattern: Init a json schema
 
 ```javascript
 //json schema example
@@ -60,10 +63,9 @@ There are there pattern to create a conversation.
 
   schema = switchBoard.initSchema('User', userSchema)
   switchBoard.startDialog(msg, 'create user', schema)
-
 ```
 
-### Second pattern: Init a message model
+#### Second pattern: Init a message model
 ```javascript
 // message model example
 
@@ -155,7 +157,7 @@ There are there pattern to create a conversation.
 
 ```
 
-### Third pattern: custom
+#### Third pattern: custom
 ```coffee
 //example
 
@@ -195,93 +197,10 @@ There are there pattern to create a conversation.
 
 ```
 
-### API
-###### conversation is an instance of an EventEmitter
-###### It emits an `end` event when the dialog with the user is done
+## API
+## TODO
 
-##### robot.e.createDialog(robot)
+- response formater
+- ut
+- doc
 
-Returns a Dialog singleton object.
-
-**robot**: instance of hubot's `Robot`.
-e.g.
-
-```coffee
-  switchBoard = robot.e.createDialog(robot)
-```
-##### initSchema(schemaName, [schema])
-
-Returns a new conversation schema object.
-
-**schemaName**: instance of hubot's `Robot`.
-
-**schema**:  `pattern one json schema` or `pattern two message model`.
-
-
-##### startDialog(msg, conversationName, schema, expireTime)
-
-Returns a new conversation object, with a default expire time 1h.
-
-**msg**: An incoming message heard / responded to by the robot.
- eg:
-
- ```javascript
- robot.respond(/foo/,function(msg){
-    var dialog = conversation.startDialog(msg);
- })
- ```
-
-**conversationName**:  conversation name.
-
-**schema**: schema object.
-
-**expireTime**: expire time.
-
-##### addChoice(regex, handler)
-
- Adds a listener choice to this Dialog.
- If a message is received that matches the choice `regex`, the handler will be executed.
-
- **regex**: a regular expresion that will be aplied to the incoming message from the receive function
-
- **handler**: function(message),  A function that is executed against a successfully matched message. The `match` property of the
- original
-
-##### updateQuestion(value)
-
-Update all answers.
-
-**value**: String - question
-
-##### updateAnswers(value)
-
-Update last question.
-
-**value**: String - answer
-
-### conversation manager command
-
-##### show conversation {conversationId|all}
-eg:
-
-  show conversation all
-
-  show conversation 56465621321
-
-  show conversation
-
-##### resume conversation {conversationId}
-eg:
-
-  resume conversation 56465621321
-
-  resume conversation
-
-##### cancel conversation {conversationId|all}
-eg:
-
-  cancel conversation all
-
-  cancel conversation 56465621321
-
-  cancel conversation
