@@ -13,6 +13,7 @@ npm install sbot-conversation
 
 ## Usage
 
+### Create a conversation manager instance
 There are there pattern to create a conversation.
 
 ### First pattern: Init a json schema
