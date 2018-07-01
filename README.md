@@ -1,13 +1,14 @@
 # sbot-conversation
 A conversation session implement for [hubot](https://github.com/hubotio/hubot).
 
+## Features
+- conversation
+- conversation manager
+
 ## Installation
 ```bash
 npm install sbot-conversation
 ```
-## Features
-- conversation
-- conversation manager
 
 ## Example
 
