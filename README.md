@@ -201,7 +201,6 @@ There are there pattern to create a conversation.
 ## API
 ## TODO
 
-- response formater
 - ut
 - doc
 
