@@ -27,10 +27,14 @@
   },
   "homepage": "https://github.com/sactive/sbot-conversation#readme",
   "dependencies": {
+    "async-series": "0.0.1",
     "extend": "^3.0.1",
-    "lodash": "^4.17.10"
+    "jsonschema": "^1.2.4",
+    "lodash": "^4.17.10",
+    "moment": "^2.22.2"
   },
   "devDependencies": {
+    "babel-register": "^6.26.0",
     "chai": "^4.1.2",
     "eslint": "^4.19.1",
     "eslint-config-sactive": "^2.0.0",

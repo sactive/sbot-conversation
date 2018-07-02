@@ -1,0 +1,33 @@
+const {expect} = require('chai');
+const conversation = require('../lib');
+
+const CONSTANTS_MOCK = {
+  CONVERSATION_STATUS: {
+    ACTIVE: 'active',
+    PAUSED: 'pending'
+  },
+  CONVERSATION_SCHEMA_TYPE: {
+    DYNAMIC: 'dynamic',
+    JSON_SCHEMA: 'object',
+    CUSTOM: 'custom'
+  },
+  DEFAULT_EXPIRE_TIME: 60 * 1000
+};
+
+describe('Index tests', function () {
+  it('Private constants test', function () {
+    expect(CONSTANTS_MOCK).to.eql(conversation.private.constants);
+  });
+
+  it('initManager should be a function', function () {
+    expect(conversation.initManager).to.be.a('function');
+  });
+
+  it('Dialog should be a function', function () {
+    expect(conversation.Dialog).to.be.an('function');
+  });
+
+  it('conversationMiddleware should be a function', function () {
+    expect(conversation.conversationMiddleware).to.be.a('function');
+  });
+});
