@@ -1,11 +1,11 @@
 require('coffee-script/register');
 const {expect} = require('chai');
 const Helper = require('hubot-test-helper');
-const helper = new Helper('./mock/scripts2.js');
+const helper = new Helper('./mock/scripts3.js');
 
 let room = null;
 let userName = 'pooky';
-describe('conversation middleware tests', function () {
+describe('flow tests', function () {
   beforeEach(function () {
     room = helper.createRoom({httpd: false});
   });
@@ -13,38 +13,68 @@ describe('conversation middleware tests', function () {
     room = null;
   });
 
-  describe('conversation flow tests', function () {
-    it('conversation json schema flow test', function (done) {
+  describe('conversation manager tests', function () {
+    it('show conversation without id', function (done) {
       room.user.say(userName, '@hubot create user').then(function () {
-        expect(room.messages[1][1]).to.have.string('`User` has mandatory attribute(s) (name, email) and optional attribute(s) (employeeNum, gender)');
-        room.user.say(userName, '@hubot name: shipengqi').then(() => {
-          expect(room.messages[3][1]).to.have.string('User` instance requires property "email"');
-          room.user.say(userName, '@hubot email: shipengqi').then(() => {
-            expect(room.messages[5][1]).to.have.string('instance.email does not conform to the "email" format');
-            room.user.say(userName, '@hubot email: 126513765@test.com').then(() => {
-              expect(room.messages[7][1]).to.have.string('done');
-              done();
-            })
-          })
+        room.user.say(userName, '@hubot show conversation').then(() => {
+          expect(room.messages[3][1]).to.have.property('name', 'create user');
+          expect(room.messages[3][1]).to.have.property('status', 'active');
+          done();
         });
       });
     });
 
-    it('conversation dynamic schema flow test', function (done) {
-      room.user.say(userName, '@hubot dynamic create user').then(function () {
-        expect(room.messages[1][1]).to.have.string('Start create a user');
-        room.user.say(userName, '@hubot shipengqi').then(() => {
-          expect(room.messages[3][1]).to.have.string('Please enter your user email.');
-          room.user.say(userName, '@hubot 126513765@test.com').then(() => {
-            expect(room.messages[5][1]).to.have.string('type [skip] to continue');
-            room.user.say(userName, '@hubot skip').then(() => {
-              expect(room.messages[7][1]).to.have.string('Please enter gender enum');
-              room.user.say(userName, '@hubot female').then(() => {
-                expect(room.messages[9][1]).to.have.string('Create user successfully');
-                done();
-              })
-            })
-          })
+    it('show conversation with error id', function (done) {
+      room.user.say(userName, '@hubot create user').then(function () {
+        room.user.say(userName, '@hubot show conversation 666').then(() => {
+          expect(room.messages[3][1]).to.have.string('Cannot find conversation: 666.');
+          done();
+        });
+      });
+    });
+
+    it('show conversation with correct id', function (done) {
+      room.user.say(userName, '@hubot create user').then(function () {
+        room.user.say(userName, '@hubot show conversation').then(() => {
+          expect(room.messages[3][1]).to.have.property('name', 'create user');
+          let id = room.messages[3][1].id;
+          room.user.say(userName, `@hubot show conversation ${id}`).then(() => {
+            expect(room.messages[3][1]).to.have.property('name', 'create user');
+            expect(room.messages[3][1]).to.have.property('status', 'active');
+            expect(room.messages[3][1]).to.have.property('id', id);
+            done();
+          });
+        });
+      });
+    });
+
+    it('show conversation all', function (done) {
+      room.user.say(userName, '@hubot create user').then(function () {
+        room.user.say(userName, '@hubot show conversation all').then(() => {
+          expect(room.messages[3][1]).to.be.an('array');
+          done();
+        });
+      });
+    });
+
+    it('cancel conversation all', function (done) {
+      room.user.say(userName, '@hubot create user').then(function () {
+        room.user.say(userName, '@hubot cancel conversation all').then(() => {
+          expect(room.messages[3][1]).to.have.string('successfully');
+          done();
+        });
+      });
+    });
+
+    it('resume conversation with correct id', function (done) {
+      room.user.say(userName, '@hubot create user').then(function () {
+        room.user.say(userName, '@hubot show conversation').then(() => {
+          expect(room.messages[3][1]).to.have.property('name', 'create user');
+          let id = room.messages[3][1].id;
+          room.user.say(userName, `@hubot resume conversation ${id}`).then(() => {
+            expect(room.messages[5][1]).to.have.string('successfully');
+            done();
+          });
         });
       });
     });

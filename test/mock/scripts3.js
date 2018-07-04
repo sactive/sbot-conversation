@@ -1,8 +1,16 @@
 const {DYNAMIC_SCHEMA_MOCK, JSON_SCHEMA_MOCK} = require('./schemas');
 const {initManager} = require('../..');
 
+const enterCallback = function(msg) {
+  let reg = new RegExp(`^@hubot (show conversation|cancel conversation|resume conversation)(.*)`, 'i');
+  if (reg.test(msg.text)) {
+    return false;
+  }
+  return true;
+};
+
 module.exports = function(robot) {
-  let switchBoard = initManager(robot);
+  let switchBoard = initManager(robot, 'room', enterCallback);
   robot.respond(/dynamic create user/i, msg => {
     let schema = switchBoard.initSchema('User', DYNAMIC_SCHEMA_MOCK);
     switchBoard.start(msg, 'dynamic create user', schema);
@@ -18,10 +26,11 @@ module.exports = function(robot) {
     if (!existsConversation) {
       return msg.send(`@${msg.message.user.name} There is no active conversation.`);
     }
-    let id = msg.match[1];
+    let reg = /(@hubot )?(show conversation|cancel conversation|resume conversation)(.*)/i;
+    let id = msg.message.text.match(reg)[3];
     let receiverUserId = switchBoard.getId(msg.message);
     if (id) {
-      id = id.toLowerCase();
+      id = id.toLowerCase().trim();
     } else {
       let current = switchBoard.getCurrentConversation(receiverUserId);
       id = current.id;
@@ -44,7 +53,7 @@ module.exports = function(robot) {
     if (id === 'all') {
       response = switchBoard.getConversations(receiverUserId);
     } else {
-      response = switchBoard.getConversation(receiverUserId, id);
+      response = switchBoard.getConversation(receiverUserId, Number(id));
     }
     msg.send(response);
   };
@@ -60,7 +69,7 @@ module.exports = function(robot) {
     if (id === 'all') {
       response = switchBoard.cancelConversations(receiverUserId);
     } else {
-      response = switchBoard.cancelConversation(receiverUserId, id);
+      response = switchBoard.cancelConversation(receiverUserId, Number(id));
     }
     msg.send(response);
   };
@@ -73,13 +82,13 @@ module.exports = function(robot) {
     }
     let receiverUserId = ids.receiverUserId;
     let id = ids.id;
-    response = switchBoard.resumeConversation(receiverUserId, id);
+    response = switchBoard.resumeConversation(receiverUserId, Number(id));
     msg.send(response);
   };
 
-  robot.respond(/show conversation.*/i, showConversation);
+  robot.respond(/show conversation/i, showConversation);
 
-  robot.respond(/cancel conversation.*/i, cancelConversation);
+  robot.respond(/cancel conversation/i, cancelConversation);
 
-  robot.respond(/resume conversation.*/i, resumeConversation);
+  robot.respond(/resume conversation/i, resumeConversation);
 };

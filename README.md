@@ -1,5 +1,5 @@
 # sbot-conversation
-A conversation session implement for [hubot](https://github.com/hubotio/hubot).
+A conversation implement for [hubot](https://github.com/hubotio/hubot).
 
 ## Features
 - conversation
