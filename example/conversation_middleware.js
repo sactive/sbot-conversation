@@ -1,5 +1,5 @@
 const _ = require('lodash');
-const Dialog = require('./dialog');
+const {Dialog} = require('..');
 
 module.exports = function conversationMiddleware(customListener) {
   if (!_.isFunction(customListener)) {

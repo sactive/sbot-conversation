@@ -26,8 +26,4 @@ describe('Index tests', function () {
   it('Dialog should be a function', function () {
     expect(conversation.Dialog).to.be.an('function');
   });
-
-  it('conversationMiddleware should be a function', function () {
-    expect(conversation.conversationMiddleware).to.be.a('function');
-  });
 });
