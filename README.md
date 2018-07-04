@@ -1,7 +1,15 @@
 # sbot-conversation
 A conversation implement for [hubot](https://github.com/hubotio/hubot).
 
+[![Build status][travis-image]][travis-url]
+[![Coverage][cov-image]][cov-url]
+[![NPM version][npm-image]][npm-url]
+[![License][license-image]][license-url]
+
+[![NPM](https://nodei.co/npm/sbot-conversation.png?downloads=true)](https://nodei.co/npm/sbot-conversation/)
+
 ## Features
+
 - conversation
 - conversation manager
 
@@ -11,6 +19,85 @@ npm install sbot-conversation
 ```
 
 ## Example
+```javascript
+const {initManager} = require('sbot-conversation');
+const DYNAMIC_SCHEMA_MOCK = {
+  onCompleteMessage: 'Create user successfully!! Thanks for reporting this.',
+  type: 'dynamic',
+  steps: [
+    {
+      question: 'Start create a user \nPlease enter your user name.',
+      answer: {
+        type: 'text',
+        validation: {
+          'description': 'full name',
+          'type': 'string',
+          'minLength': 8
+        }
+      },
+      required: true
+    },
+    {
+      question: 'Please enter your user email.',
+      answer: {
+        type: 'text',
+        validation: {
+          'description': 'email address',
+          'type': 'string',
+          'format': 'email',
+          'maxLength': 64
+        }
+      },
+      required: true
+    },
+    {
+      question: 'Please enter gender enum[female, male, unspecified]',
+      answer: {
+        type: 'choice',
+        options: [
+          {
+            match: 'unspecified'
+          },
+          {
+            match: 'male'
+          },
+          {
+            match: 'female'
+          }
+        ]
+      },
+      required: false
+    }
+  ]
+};
+
+const JSON_SCHEMA_MOCK = {
+  'type': 'object',
+  'required': [
+    'name'
+  ],
+  'properties': {
+    'name': {
+      'description': 'full name',
+      'type': 'string',
+      'minLength': 8
+    }
+  }
+};
+
+module.exports = function(robot) {
+  let switchBoard = initManager(robot);
+  robot.respond(/dynamic create user/i, msg => {
+    let schema = switchBoard.initSchema('User', DYNAMIC_SCHEMA_MOCK);
+    switchBoard.start(msg, 'dynamic create user', schema);
+  });
+
+  robot.respond(/create user/i, msg => {
+    let schema = switchBoard.initSchema('User', JSON_SCHEMA_MOCK);
+    switchBoard.start(msg, 'create user', schema);
+  });
+};
+```
 
 ## Usage
 
@@ -199,8 +286,15 @@ There are there pattern to create a conversation.
 ```
 
 ## API
-## TODO
 
-- ut
-- doc
+- [API documentation](https://github.com/sactive/sbot-conversation/wiki/API)
+
+[npm-image]: https://img.shields.io/npm/v/sbot-conversation.svg
+[npm-url]: https://www.npmjs.com/package/sbot-conversation
+[travis-image]: https://travis-ci.org/sactive/sbot-conversation.svg?branch=master
+[travis-url]: https://www.travis-ci.org/sactive/sbot-conversation
+[cov-image]: https://codecov.io/gh/sactive/sbot-conversation/branch/master/graph/badge.svg
+[cov-url]: https://codecov.io/gh/sactive/sbot-conversation
+[license-image]: http://img.shields.io/npm/l/sbot-conversation.svg
+[license-url]: ./LICENSE
 
