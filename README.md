@@ -106,21 +106,21 @@ module.exports = function(robot) {
 initManager(robot, type, callback)
 ```
 
-- robot: Hubot.Robot
-- type: 'user' or 'room', default 'user'.It defines if this conversation is with the whole room or with a particular user only.
+- **robot:** `Hubot.Robot`
+- **type:** 'user' or 'room', default 'user'.It defines if this conversation is with the whole room or with a particular user only.
 If the message comes from a user (or a room) that we're having a conversation with, it will be processed as the next step in an ongoing Dialog.
-- callback: The callback should be return a `Boolean`, when the return value is `true` and there is a active conversation of the user (or the room),
+- **callback:** The callback should be return a `Boolean`, when the return value is `true` and there is a active conversation of the user (or the room),
 it will be processed as the next step in an ongoing Dialog.
 
-#### example
+**Example**
 ```javascript
-  let switchBoard = initManager(robot, 'room', function(msg) {
-    let reg = new RegExp(`^@hubot (show conversation|cancel conversation|resume conversation)(.*)`, 'i');
-    if (reg.test(msg.text)) {
-      return false;
-    }
-    return true;
-  });
+let switchBoard = initManager(robot, 'room', function(msg) {
+  let reg = new RegExp(`^@hubot (show conversation|cancel conversation|resume conversation)(.*)`, 'i');
+  if (reg.test(msg.text)) {
+    return false;
+  }
+  return true;
+});
 ```
 
 ### Create a conversation
@@ -182,6 +182,7 @@ How to define a json schema, please refer[JSON Schema](http://json-schema.org/)
 
 #### Second pattern: Init a dynamic message model
 
+**Example**
 ```javascript
 const DYNAMIC_SCHEMA_MOCK = {
   onCompleteMessage: 'Create user successfully!! Thanks for reporting this.',
@@ -255,11 +256,11 @@ module.exports = function(robot) {
 };
 ```
 How to define a dynamic message model:
-- onCompleteMessage: String // reply sent to the user when the conversation is done (optional)
-- skipKeyword: String // default 'skip', a keyword that can be used to skip non-required questions (optional)
-- skipMessage: String // a message that can be appended to any non-required questions (optional)
-- type: "dynamic" // conversation schema type must be 'dynamic' (required)
-- steps: Array, define properties.
+- **onCompleteMessage:** `String` // reply sent to the user when the conversation is done (optional)
+- **skipKeyword:** `String` // default 'skip', a keyword that can be used to skip non-required questions (optional)
+- **skipMessage:** `String` // a message that can be appended to any non-required questions (optional)
+- **type:** "dynamic" // conversation schema type must be 'dynamic' (required)
+- **steps:** `Array`, define properties.
 ```javascript
 steps: [
     {
@@ -279,9 +280,9 @@ steps: [
 ```
 
 #### Third pattern: custom
-```javascript
-//example
 
+**Example**
+```javascript
 let conversation = switchBoard.start(msg, 'create user(custom)')
 
 const function1 = (message) => {
@@ -327,14 +328,25 @@ conversation.addChoice(/no/i, function5)
 
 - [API documentation](https://github.com/sactive/sbot-conversation/wiki/API)
 
+### initManager()
+```javascript
+initManager(robot, type, callback)
+```
+
+- **robot:** `Hubot.Robot`
+- **type:** 'user' or 'room', default 'user'.It defines if this conversation is with the whole room or with a particular user only.
+If the message comes from a user (or a room) that we're having a conversation with, it will be processed as the next step in an ongoing Dialog.
+- **callback:** The callback should be return a `Boolean`, when the return value is `true` and there is a active conversation of the user (or the room),
+it will be processed as the next step in an ongoing Dialog.
+
 ### initSchema()
 ```javascript
 initSchema(schemaName , schema)
 ```
 Returns a new conversation schema object.
 
-- schemaName: instance of hubot's Robot.
-- schema: json schema or dynamic message model.
+- **schemaName:** instance of hubot's Robot.
+- **schema:** json schema or dynamic message model.
 
 **`initSchema` used for `json schema pattern` or `dynamic message model pattern` only.**
 
@@ -342,18 +354,18 @@ Returns a new conversation schema object.
 ```javascript
  start(msg, conversationName, schema, expireTime)
 ```
- Returns a new conversation object, with a default expire time 1m.
+Returns a new conversation object, with a default expire time 1m.
 
-- msg: An incoming message heard / responded to by the robot. eg:
+- **msg:** An incoming message heard / responded to by the robot. eg:
 ```javascript
 robot.respond(/foo/, function(msg){
     let schema = switchBoard.initSchema('User', DYNAMIC_SCHEMA_MOCK);
     switchBoard.start(msg, 'dynamic create user', schema);
 })
 ```
-- conversationName: conversation name.
-- schema: schema object (optional), used for `json schema pattern` or `dynamic message model pattern` only.
-- expireTime: expire time (ms).
+- **conversationName:** conversation name.
+- **schema:** schema object (optional), used for `json schema pattern` or `dynamic message model pattern` only.
+- **expireTime:** expire time (ms).
 ```javascript
 robot.respond(/foo/, function(msg){
     switchBoard.start(msg, 'dynamic create user', null, 120 * 1000);
@@ -367,8 +379,8 @@ addChoice(regex, handler)
 Adds a listener choice to this Dialog. If a message is received that matches the choice regex, the handler will be executed.
 **only for custom pattern.**
 
-- regex: a regular expresion that will be aplied to the incoming message from the receive function
-- handler: function(message), A function that is executed against a successfully matched message. The match property of the original
+- **regex:** a regular expresion that will be aplied to the incoming message from the receive function
+- **handler:** function(message), A function that is executed against a successfully matched message. The match property of the original
 
 
 ### updateQuestion()
@@ -378,7 +390,7 @@ updateQuestion(value)
 Update last question.
 **only for custom pattern.**
 
-- value: String - question
+- **value:** `String` - question
 
 ### updateAnswers()
 ```javascript
@@ -387,7 +399,7 @@ updateAnswers(value)
 Update all answers.
 **only for custom pattern.**
 
-- value: String - answer
+- **value:** `String` - answer
 
 [npm-image]: https://img.shields.io/npm/v/sbot-conversation.svg
 [npm-url]: https://www.npmjs.com/package/sbot-conversation
