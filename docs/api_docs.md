@@ -147,10 +147,7 @@ Create a new `Dialog`.Inherits from ConversationManager.
 * [Dialog](#Dialog) ⇐ [<code>ConversationManager</code>](#new_ConversationManager_new)
     * [new Dialog#initSchema(name, schema)](#new_Dialog_new)
     * [.start(msg, conversationName, schema, expireTime)](#Dialog+start) ⇒ [<code>Conversation</code>](#Conversation)
-    * [.addConversation(conversation)](#ConversationManager+addConversation) ⇒ [<code>Conversation</code>](#Conversation)
     * [.resumeConversation(receiverUserId, conversationId)](#ConversationManager+resumeConversation) ⇒ <code>String</code>
-    * [.pauseConversation(receiverUserId, conversationId)](#ConversationManager+pauseConversation) ⇒ <code>String</code>
-    * [.pauseConversations(receiverUserId)](#ConversationManager+pauseConversations) ⇒ <code>Array.&lt;String&gt;</code>
     * [.getConversations(receiverUserId)](#ConversationManager+getConversations) ⇒ [<code>Array.&lt;Conversation&gt;</code>](#Conversation)
     * [.getConversation(receiverUserId, conversationId)](#ConversationManager+getConversation) ⇒ [<code>Conversation</code>](#Conversation)
     * [.cancelConversation(receiverUserId, conversationId, options)](#ConversationManager+cancelConversation) ⇒ <code>String</code>
@@ -184,18 +181,6 @@ Start a dialog.
 | schema | <code>Object</code> | schema object. |
 | expireTime | <code>Number</code> | expire time. |
 
-<a name="ConversationManager+addConversation"></a>
-
-### dialog.addConversation(conversation) ⇒ [<code>Conversation</code>](#Conversation)
-Create a new conversation.
-
-**Kind**: instance method of [<code>Dialog</code>](#Dialog)  
-**Returns**: [<code>Conversation</code>](#Conversation) - Returns current conversation instance.  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| conversation | [<code>Conversation</code>](#Conversation) | a new conversation. |
-
 <a name="ConversationManager+resumeConversation"></a>
 
 ### dialog.resumeConversation(receiverUserId, conversationId) ⇒ <code>String</code>
@@ -208,31 +193,6 @@ Resume a conversation.
 | --- | --- | --- |
 | receiverUserId | <code>String</code> | `userId&roomId` or userId. |
 | conversationId | <code>String</code> | conversation id. |
-
-<a name="ConversationManager+pauseConversation"></a>
-
-### dialog.pauseConversation(receiverUserId, conversationId) ⇒ <code>String</code>
-Pause a conversation.
-
-**Kind**: instance method of [<code>Dialog</code>](#Dialog)  
-**Returns**: <code>String</code> - Returns pause conversation message.  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| receiverUserId | <code>String</code> | `userId&roomId` or userId. |
-| conversationId | <code>String</code> | conversation id. |
-
-<a name="ConversationManager+pauseConversations"></a>
-
-### dialog.pauseConversations(receiverUserId) ⇒ <code>Array.&lt;String&gt;</code>
-Pause all conversations.
-
-**Kind**: instance method of [<code>Dialog</code>](#Dialog)  
-**Returns**: <code>Array.&lt;String&gt;</code> - Returns all paused conversations messages.  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| receiverUserId | <code>String</code> | `userId&roomId` or userId. |
 
 <a name="ConversationManager+getConversations"></a>
 
@@ -316,10 +276,7 @@ Exists conversations.
 * [Dialog](#Dialog)
     * [new Dialog#initSchema(name, schema)](#new_Dialog_new)
     * [.start(msg, conversationName, schema, expireTime)](#Dialog+start) ⇒ [<code>Conversation</code>](#Conversation)
-    * [.addConversation(conversation)](#ConversationManager+addConversation) ⇒ [<code>Conversation</code>](#Conversation)
     * [.resumeConversation(receiverUserId, conversationId)](#ConversationManager+resumeConversation) ⇒ <code>String</code>
-    * [.pauseConversation(receiverUserId, conversationId)](#ConversationManager+pauseConversation) ⇒ <code>String</code>
-    * [.pauseConversations(receiverUserId)](#ConversationManager+pauseConversations) ⇒ <code>Array.&lt;String&gt;</code>
     * [.getConversations(receiverUserId)](#ConversationManager+getConversations) ⇒ [<code>Array.&lt;Conversation&gt;</code>](#Conversation)
     * [.getConversation(receiverUserId, conversationId)](#ConversationManager+getConversation) ⇒ [<code>Conversation</code>](#Conversation)
     * [.cancelConversation(receiverUserId, conversationId, options)](#ConversationManager+cancelConversation) ⇒ <code>String</code>
@@ -353,18 +310,6 @@ Start a dialog.
 | schema | <code>Object</code> | schema object. |
 | expireTime | <code>Number</code> | expire time. |
 
-<a name="ConversationManager+addConversation"></a>
-
-### dialog.addConversation(conversation) ⇒ [<code>Conversation</code>](#Conversation)
-Create a new conversation.
-
-**Kind**: instance method of [<code>Dialog</code>](#Dialog)  
-**Returns**: [<code>Conversation</code>](#Conversation) - Returns current conversation instance.  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| conversation | [<code>Conversation</code>](#Conversation) | a new conversation. |
-
 <a name="ConversationManager+resumeConversation"></a>
 
 ### dialog.resumeConversation(receiverUserId, conversationId) ⇒ <code>String</code>
@@ -377,31 +322,6 @@ Resume a conversation.
 | --- | --- | --- |
 | receiverUserId | <code>String</code> | `userId&roomId` or userId. |
 | conversationId | <code>String</code> | conversation id. |
-
-<a name="ConversationManager+pauseConversation"></a>
-
-### dialog.pauseConversation(receiverUserId, conversationId) ⇒ <code>String</code>
-Pause a conversation.
-
-**Kind**: instance method of [<code>Dialog</code>](#Dialog)  
-**Returns**: <code>String</code> - Returns pause conversation message.  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| receiverUserId | <code>String</code> | `userId&roomId` or userId. |
-| conversationId | <code>String</code> | conversation id. |
-
-<a name="ConversationManager+pauseConversations"></a>
-
-### dialog.pauseConversations(receiverUserId) ⇒ <code>Array.&lt;String&gt;</code>
-Pause all conversations.
-
-**Kind**: instance method of [<code>Dialog</code>](#Dialog)  
-**Returns**: <code>Array.&lt;String&gt;</code> - Returns all paused conversations messages.  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| receiverUserId | <code>String</code> | `userId&roomId` or userId. |
 
 <a name="ConversationManager+getConversations"></a>
 

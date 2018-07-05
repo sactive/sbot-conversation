@@ -11,12 +11,22 @@ const CONSTANTS_MOCK = {
     JSON_SCHEMA: 'object',
     CUSTOM: 'custom'
   },
-  DEFAULT_EXPIRE_TIME: 60 * 1000
+  DEFAULT_EXPIRE_TIME: 60 * 1000,
+  RESPONSE_CODE: {
+    DEFAULT_ERROR: {
+      code: 'error',
+      msg: 'Operation error.'
+    },
+    DEFAULT_SUCCESS: {
+      code: 'ok',
+      msg: 'Success.'
+    }
+  }
 };
 
 describe('Index tests', function () {
   it('Private constants test', function () {
-    expect(CONSTANTS_MOCK).to.eql(conversation.private.constants);
+    expect(CONSTANTS_MOCK).to.deep.eql(conversation.private.constants);
   });
 
   it('initManager should be a function', function () {

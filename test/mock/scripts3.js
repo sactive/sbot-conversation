@@ -1,16 +1,14 @@
 const {DYNAMIC_SCHEMA_MOCK, JSON_SCHEMA_MOCK} = require('./schemas');
 const {initManager} = require('../..');
 
-const enterCallback = function(msg) {
-  let reg = new RegExp(`^@hubot (show conversation|cancel conversation|resume conversation)(.*)`, 'i');
-  if (reg.test(msg.text)) {
-    return false;
-  }
-  return true;
-};
-
 module.exports = function(robot) {
-  let switchBoard = initManager(robot, 'room', enterCallback);
+  let switchBoard = initManager(robot, 'room', function(msg) {
+    let reg = new RegExp(`^@hubot (show conversation|cancel conversation|resume conversation)(.*)`, 'i');
+    if (reg.test(msg.text)) {
+      return false;
+    }
+    return true;
+  });
   robot.respond(/dynamic create user/i, msg => {
     let schema = switchBoard.initSchema('User', DYNAMIC_SCHEMA_MOCK);
     switchBoard.start(msg, 'dynamic create user', schema);
