@@ -1,4 +1,6 @@
-const {initManager} = require('../..');
+## Conversation Manage Example
+```javascript
+const {initManager} = require('sbot-conversation');
 
 module.exports = function(robot) {
   let switchBoard = initManager(robot);
@@ -72,3 +74,4 @@ module.exports = function(robot) {
 
   robot.respond(/resume conversation.*/i, resumeConversation);
 };
+```

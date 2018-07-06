@@ -363,11 +363,29 @@ module.exports = function conversationMiddleware(customListener) {
 robot.receiveMiddleware(conversationMiddleware(customListener));
 ```
 
+### Conversation manage
+**Example**
+```javascript
+module.exports = function(robot) {
+  let switchBoard = initManager(robot);
+  let existsConversation = switchBoard.existsConversation(msg.message);
+  if (!existsConversation) {
+    return msg.send(`@${msg.message.user.name} There is no active conversation.`);
+  }
+  let userId = switchBoard.getId(msg.message);
+  let currentConversation = switchBoard.getCurrentConversation(userId);
+  let conversations = switchBoard.getConversations(userId);
+};
+```
+
+**[More Conversation manage Examples](https://github.com/sactive/sbot-conversation/wiki/Example).**
+
 ## API
 
 - [API documentation](https://github.com/sactive/sbot-conversation/wiki/API)
 
-### initManager()
+### Conversation Manager API
+#### initManager()
 ```javascript
 initManager(robot, type, callback, singleton)
 ```
@@ -380,7 +398,7 @@ If the message comes from a user (or a room) that we're having a conversation wi
 it will be processed as the next step in an ongoing Dialog.
 - **singleton:** `Boolean`,(optional) default `true`. Enable the singleton.
 
-### initSchema()
+#### initSchema()
 ```javascript
 initSchema(schemaName , schema)
 ```
@@ -391,9 +409,9 @@ Returns a new conversation schema object.
 
 **`initSchema` used for `json schema pattern` or `dynamic message model pattern` only.**
 
-### start()
+#### start()
 ```javascript
- start(msg, conversationName, schema, expireTime)
+start(msg, conversationName, schema, expireTime)
 ```
 Returns a new conversation object, with a default expire time 1m.
 
@@ -413,7 +431,10 @@ robot.respond(/foo/, function(msg){
 })
 ```
 
-### addChoice()
+**[More Conversation Manager API](https://github.com/sactive/sbot-conversation/wiki/API#Dialog).**
+
+### Conversation API
+#### addChoice()
 ```javascript
 addChoice(regex, handler)
 ```
@@ -424,7 +445,7 @@ Adds a listener choice to this Dialog. If a message is received that matches the
 - **handler:** function(message), A function that is executed against a successfully matched message. The match property of the original
 
 
-### updateQuestion()
+#### updateQuestion()
 ```javascript
 updateQuestion(value)
 ```
@@ -433,7 +454,7 @@ Update last question.
 
 - **value:** `String` - question
 
-### updateAnswers()
+#### updateAnswers()
 ```javascript
 updateAnswers(value)
 ```

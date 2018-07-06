@@ -24,12 +24,7 @@ Create a new `Conversation`.Inherits from EventEmitter.
 
 * [Conversation](#Conversation) ⇐ <code>EventEmitter</code>
     * [new Conversation(robot, msg, receiverUserId, conversationName, schema, expireTime)](#new_Conversation_new)
-    * [.start(msg)](#Conversation+start)
-    * [.resume()](#Conversation+resume)
-    * [.pause()](#Conversation+pause)
-    * [.receiveMessage(msg)](#Conversation+receiveMessage)
     * [.addChoice(regex, handler)](#Conversation+addChoice)
-    * [.executeChoicesHandler(msg, text)](#Conversation+executeChoicesHandler)
     * [.updateAnswers(msg, value)](#Conversation+updateAnswers)
     * [.updateQuestion(question)](#Conversation+updateQuestion)
 
@@ -41,48 +36,10 @@ Create a new `Conversation`.Inherits from EventEmitter.
 | --- | --- | --- |
 | robot | <code>hubot.Robot</code> | instance of hubot's `Robot`. |
 | msg | <code>Object</code> | the current response. |
-| receiverUserId | <code>String</code> | `userId&roomId` or userId. |
+| receiverUserId | <code>String</code> | `userId&roomId` or roomId. |
 | conversationName | <code>String</code> | conversation name. |
 | schema | <code>Object</code> | schema object. |
 | expireTime | <code>number</code> | expire time. |
-
-<a name="Conversation+start"></a>
-
-### conversation.start(msg)
-tart a conversation.
-
-**Kind**: instance method of [<code>Conversation</code>](#Conversation)  
-**Access**: public  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| msg | <code>Object</code> | the current response. |
-
-<a name="Conversation+resume"></a>
-
-### conversation.resume()
-Resume conversation.
-
-**Kind**: instance method of [<code>Conversation</code>](#Conversation)  
-**Access**: public  
-<a name="Conversation+pause"></a>
-
-### conversation.pause()
-Pause conversation.
-
-**Kind**: instance method of [<code>Conversation</code>](#Conversation)  
-**Access**: public  
-<a name="Conversation+receiveMessage"></a>
-
-### conversation.receiveMessage(msg)
-Accepts an incoming message, tries to match against the registered choices.
-
-**Kind**: instance method of [<code>Conversation</code>](#Conversation)  
-**Access**: public  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| msg | <code>Object</code> | the current response. |
 
 <a name="Conversation+addChoice"></a>
 
@@ -96,19 +53,6 @@ Registers a new choice for current conversation.
 | --- | --- | --- |
 | regex | <code>Regex</code> | Expression to match. |
 | handler | <code>function</code> | Handler function when matched. |
-
-<a name="Conversation+executeChoicesHandler"></a>
-
-### conversation.executeChoicesHandler(msg, text)
-Execute Choices Handler, after a choice is made, the timer is cleared.
-
-**Kind**: instance method of [<code>Conversation</code>](#Conversation)  
-**Access**: public  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| msg | <code>Object</code> | the current response. |
-| text | <code>String</code> | msg.message.text. |
 
 <a name="Conversation+updateAnswers"></a>
 
@@ -154,6 +98,7 @@ Create a new `Dialog`.Inherits from ConversationManager.
     * [.cancelConversations(receiverUserId)](#ConversationManager+cancelConversations) ⇒ <code>String</code>
     * [.getCurrentConversation(receiverUserId)](#ConversationManager+getCurrentConversation) ⇒ [<code>Conversation</code>](#Conversation) \| <code>Null</code>
     * [.existsConversation(msg)](#ConversationManager+existsConversation)
+    * [.getId(msg)](#ConversationManager+getId) ⇒ <code>String</code>
 
 <a name="new_Dialog_new"></a>
 
@@ -191,7 +136,7 @@ Resume a conversation.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| receiverUserId | <code>String</code> | `userId&roomId` or userId. |
+| receiverUserId | <code>String</code> | `userId&roomId` or roomId. |
 | conversationId | <code>String</code> | conversation id. |
 
 <a name="ConversationManager+getConversations"></a>
@@ -204,7 +149,7 @@ Get all conversations.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| receiverUserId | <code>String</code> | `userId&roomId` or userId. |
+| receiverUserId | <code>String</code> | `userId&roomId` or roomId. |
 
 <a name="ConversationManager+getConversation"></a>
 
@@ -216,7 +161,7 @@ Get a conversation.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| receiverUserId | <code>String</code> | `userId&roomId` or userId. |
+| receiverUserId | <code>String</code> | `userId&roomId` or roomId. |
 | conversationId | <code>String</code> | conversation id. |
 
 <a name="ConversationManager+cancelConversation"></a>
@@ -243,7 +188,7 @@ Cancel all conversations.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| receiverUserId | <code>String</code> | `userId&roomId` or userId. |
+| receiverUserId | <code>String</code> | `userId&roomId` or roomId. |
 
 <a name="ConversationManager+getCurrentConversation"></a>
 
@@ -255,7 +200,7 @@ Get current active conversation.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| receiverUserId | <code>String</code> | `userId&roomId` or userId. |
+| receiverUserId | <code>String</code> | `userId&roomId` or roomId. |
 
 <a name="ConversationManager+existsConversation"></a>
 
@@ -267,6 +212,18 @@ Exists conversations.
 | Param | Type | Description |
 | --- | --- | --- |
 | msg | <code>Object</code> | the current context. |
+
+<a name="ConversationManager+getId"></a>
+
+### dialog.getId(msg) ⇒ <code>String</code>
+Get all conversations.
+
+**Kind**: instance method of [<code>Dialog</code>](#Dialog)  
+**Returns**: <code>String</code> - receiverUserId - `userId&roomId` or roomId.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| msg | <code>Object</code> | the current response. |
 
 <a name="Dialog"></a>
 
@@ -283,6 +240,7 @@ Exists conversations.
     * [.cancelConversations(receiverUserId)](#ConversationManager+cancelConversations) ⇒ <code>String</code>
     * [.getCurrentConversation(receiverUserId)](#ConversationManager+getCurrentConversation) ⇒ [<code>Conversation</code>](#Conversation) \| <code>Null</code>
     * [.existsConversation(msg)](#ConversationManager+existsConversation)
+    * [.getId(msg)](#ConversationManager+getId) ⇒ <code>String</code>
 
 <a name="new_Dialog_new"></a>
 
@@ -320,7 +278,7 @@ Resume a conversation.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| receiverUserId | <code>String</code> | `userId&roomId` or userId. |
+| receiverUserId | <code>String</code> | `userId&roomId` or roomId. |
 | conversationId | <code>String</code> | conversation id. |
 
 <a name="ConversationManager+getConversations"></a>
@@ -333,7 +291,7 @@ Get all conversations.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| receiverUserId | <code>String</code> | `userId&roomId` or userId. |
+| receiverUserId | <code>String</code> | `userId&roomId` or roomId. |
 
 <a name="ConversationManager+getConversation"></a>
 
@@ -345,7 +303,7 @@ Get a conversation.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| receiverUserId | <code>String</code> | `userId&roomId` or userId. |
+| receiverUserId | <code>String</code> | `userId&roomId` or roomId. |
 | conversationId | <code>String</code> | conversation id. |
 
 <a name="ConversationManager+cancelConversation"></a>
@@ -372,7 +330,7 @@ Cancel all conversations.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| receiverUserId | <code>String</code> | `userId&roomId` or userId. |
+| receiverUserId | <code>String</code> | `userId&roomId` or roomId. |
 
 <a name="ConversationManager+getCurrentConversation"></a>
 
@@ -384,7 +342,7 @@ Get current active conversation.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| receiverUserId | <code>String</code> | `userId&roomId` or userId. |
+| receiverUserId | <code>String</code> | `userId&roomId` or roomId. |
 
 <a name="ConversationManager+existsConversation"></a>
 
@@ -396,4 +354,16 @@ Exists conversations.
 | Param | Type | Description |
 | --- | --- | --- |
 | msg | <code>Object</code> | the current context. |
+
+<a name="ConversationManager+getId"></a>
+
+### dialog.getId(msg) ⇒ <code>String</code>
+Get all conversations.
+
+**Kind**: instance method of [<code>Dialog</code>](#Dialog)  
+**Returns**: <code>String</code> - receiverUserId - `userId&roomId` or roomId.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| msg | <code>Object</code> | the current response. |
 
