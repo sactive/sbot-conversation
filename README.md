@@ -102,15 +102,18 @@ module.exports = function(robot) {
 ## Usage
 
 ### Create a conversation manager instance
+
 ```javascript
-initManager(robot, type, callback)
+initManager(robot, type, callback, singleton)
 ```
+Return a conversation manager instance.(singleton is recommended).
 
 - **robot:** `Hubot.Robot`
-- **type:** 'user' or 'room', default 'user'.It defines if this conversation is with the whole room or with a particular user only.
+- **type:** (optional) 'user' or 'room', default 'user'.It defines if this conversation is with the whole room or with a particular user only.
 If the message comes from a user (or a room) that we're having a conversation with, it will be processed as the next step in an ongoing Dialog.
-- **callback:** The callback should be return a `Boolean`, when the return value is `true` and there is a active conversation of the user (or the room),
+- **callback:** (optional) The callback should be return a `Boolean`, when the return value is `true` and there is a active conversation of the user (or the room),
 it will be processed as the next step in an ongoing Dialog.
+- **singleton:** `Boolean`,(optional) default `true`. Enable the singleton.
 
 **Example**
 ```javascript
@@ -324,20 +327,58 @@ conversation.addChoice(/no/i, function5)
 
 ```
 
+### robot.receiveMiddleware integration
+**Example**
+```javascript
+const _ = require('lodash');
+const {Dialog} = require('sbot-conversation');
+
+module.exports = function conversationMiddleware(customListener) {
+  if (!_.isFunction(customListener)) {
+    customListener = () => true;
+  }
+
+  return function(context, next, done) {
+    let msg = context.response;
+    let robot = msg.robot;
+
+    robot.logger.debug('Conversation middleware processing: ', msg.message.text);
+
+    let dialog = new Dialog(robot);
+    if (!customListener(msg.message)) {
+      return next();
+    }
+    let existsConversation = dialog.existsConversation(msg.message);
+    if (existsConversation) {
+      let receiverUserId = dialog.getId(msg.message);
+      let conversation = dialog.getCurrentConversation(receiverUserId);
+      conversation.receiveMessage(msg);
+    }
+    return next();
+  };
+};
+
+
+//call the robot.receiveMiddleware method to register a conversationMiddleware in your script
+robot.receiveMiddleware(conversationMiddleware(customListener));
+```
+
 ## API
 
 - [API documentation](https://github.com/sactive/sbot-conversation/wiki/API)
 
 ### initManager()
 ```javascript
-initManager(robot, type, callback)
+initManager(robot, type, callback, singleton)
 ```
+Return a conversation manager instance.(singleton is recommended).
 
 - **robot:** `Hubot.Robot`
-- **type:** 'user' or 'room', default 'user'.It defines if this conversation is with the whole room or with a particular user only.
+- **type:** (optional) 'user' or 'room', default 'user'.It defines if this conversation is with the whole room or with a particular user only.
 If the message comes from a user (or a room) that we're having a conversation with, it will be processed as the next step in an ongoing Dialog.
-- **callback:** The callback should be return a `Boolean`, when the return value is `true` and there is a active conversation of the user (or the room),
+- **callback:** (optional) The callback should be return a `Boolean`, when the return value is `true` and there is a active conversation of the user (or the room),
 it will be processed as the next step in an ongoing Dialog.
+- **singleton:** `Boolean`,(optional) default `true`. Enable the singleton.
 
 ### initSchema()
 ```javascript
@@ -365,7 +406,7 @@ robot.respond(/foo/, function(msg){
 ```
 - **conversationName:** conversation name.
 - **schema:** schema object (optional), used for `json schema pattern` or `dynamic message model pattern` only.
-- **expireTime:** expire time (ms).
+- **expireTime:** `Number`, (optional) expire time (ms).
 ```javascript
 robot.respond(/foo/, function(msg){
     switchBoard.start(msg, 'dynamic create user', null, 120 * 1000);
