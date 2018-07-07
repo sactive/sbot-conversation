@@ -7,10 +7,11 @@ module.exports = function(robot) {
     if (!existsConversation) {
       return msg.send(`@${msg.message.user.name} There is no active conversation.`);
     }
-    let id = msg.match[1];
+    let reg = /(@hubot )?(show conversation|cancel conversation|resume conversation)(.*)/i;
+    let id = msg.message.text.match(reg)[3];
     let receiverUserId = switchBoard.getId(msg.message);
     if (id) {
-      id = id.toLowerCase();
+      id = id.toLowerCase().trim();
     } else {
       let current = switchBoard.getCurrentConversation(receiverUserId);
       id = current.id;
@@ -33,13 +34,12 @@ module.exports = function(robot) {
     if (id === 'all') {
       response = switchBoard.getConversations(receiverUserId);
     } else {
-      response = switchBoard.getConversation(receiverUserId, id);
+      response = switchBoard.getConversation(receiverUserId, Number(id));
     }
     msg.send(response);
   };
 
   const cancelConversation = function(msg) {
-    let response;
     let ids = tryToGetConversation(msg);
     if (!ids) {
       return;
@@ -47,23 +47,23 @@ module.exports = function(robot) {
     let receiverUserId = ids.receiverUserId;
     let id = ids.id;
     if (id === 'all') {
-      response = switchBoard.cancelConversations(receiverUserId);
+      switchBoard.cancelConversations(receiverUserId);
     } else {
-      response = switchBoard.cancelConversation(receiverUserId, id);
+      switchBoard.cancelConversation(receiverUserId, Number(id));
     }
-    msg.send(response);
+    msg.send('cancel conversation successfully');
   };
 
   const resumeConversation = function(msg) {
-    let response;
     let ids = tryToGetConversation(msg);
     if (!ids) {
       return;
     }
     let receiverUserId = ids.receiverUserId;
     let id = ids.id;
-    response = switchBoard.resumeConversation(receiverUserId, id);
-    msg.send(response);
+    let resumedConversation = switchBoard.resumeConversation(receiverUserId, Number(id));
+    console.log(resumedConversation.name);
+    msg.send('resume conversation successfully');
   };
 
   robot.respond(/show conversation.*/i, showConversation);

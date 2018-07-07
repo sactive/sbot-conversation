@@ -5,7 +5,7 @@ const helper = new Helper('./mock/scripts3.js');
 
 let room = null;
 let userName = 'pooky';
-describe('flow tests', function () {
+describe('manager tests', function () {
   beforeEach(function () {
     room = helper.createRoom({httpd: false});
   });
@@ -60,7 +60,7 @@ describe('flow tests', function () {
     it('cancel conversation all', function (done) {
       room.user.say(userName, '@hubot create user').then(function () {
         room.user.say(userName, '@hubot cancel conversation all').then(() => {
-          expect(room.messages[3][1]).to.have.string('successfully');
+          expect(room.messages[3][1]).to.have.string('cancel conversation successfully');
           done();
         });
       });
@@ -72,7 +72,7 @@ describe('flow tests', function () {
           expect(room.messages[3][1]).to.have.property('name', 'create user');
           let id = room.messages[3][1].id;
           room.user.say(userName, `@hubot resume conversation ${id}`).then(() => {
-            expect(room.messages[5][1]).to.have.string('successfully');
+            expect(room.messages[5][1]).to.have.string('resume conversation successfully');
             done();
           });
         });
