@@ -312,11 +312,11 @@ const function3 = (message) => {
 const function4 = (message) => {
   conversation.updateAnswers(message.message.text)
   message.reply('Create user successfully!! Thanks for reporting this.')
-  conversation.emit 'end'
+  conversation.close();
 }
 
 const function5 =  (message) => {
-  conversation.emit 'end'
+  conversation.close();
   message.reply('Bye bye!')
 }
 
@@ -462,6 +462,13 @@ Update all answers.
 **only for custom pattern.**
 
 - **value:** `String` - answer
+
+#### close()
+```javascript
+close()
+```
+Emit an close event with all all answers, and close the current conversation.
+**only for custom pattern.**
 
 [npm-image]: https://img.shields.io/npm/v/sbot-conversation.svg
 [npm-url]: https://www.npmjs.com/package/sbot-conversation

@@ -27,6 +27,7 @@ Create a new `Conversation`.Inherits from EventEmitter.
     * [.addChoice(regex, handler)](#Conversation+addChoice)
     * [.updateAnswers(msg, value)](#Conversation+updateAnswers)
     * [.updateQuestion(question)](#Conversation+updateQuestion)
+    * [.close()](#Conversation+close)
 
 <a name="new_Conversation_new"></a>
 
@@ -79,6 +80,13 @@ Update last question.
 | --- | --- | --- |
 | question | <code>String</code> | question. |
 
+<a name="Conversation+close"></a>
+
+### conversation.close()
+Emit an close event with all all answers, and close the current conversation.
+
+**Kind**: instance method of [<code>Conversation</code>](#Conversation)  
+**Access**: public  
 <a name="Dialog"></a>
 
 ## Dialog ⇐ [<code>ConversationManager</code>](#new_ConversationManager_new)
