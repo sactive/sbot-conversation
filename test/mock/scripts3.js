@@ -57,7 +57,6 @@ module.exports = function(robot) {
   };
 
   const cancelConversation = function(msg) {
-    let response;
     let ids = tryToGetConversation(msg);
     if (!ids) {
       return;
@@ -65,23 +64,22 @@ module.exports = function(robot) {
     let receiverUserId = ids.receiverUserId;
     let id = ids.id;
     if (id === 'all') {
-      response = switchBoard.cancelConversations(receiverUserId);
+      switchBoard.cancelConversations(receiverUserId);
     } else {
-      response = switchBoard.cancelConversation(receiverUserId, Number(id));
+      switchBoard.cancelConversation(receiverUserId, Number(id));
     }
-    msg.send(response);
+    msg.send('cancel conversation successfully');
   };
 
   const resumeConversation = function(msg) {
-    let response;
     let ids = tryToGetConversation(msg);
     if (!ids) {
       return;
     }
     let receiverUserId = ids.receiverUserId;
     let id = ids.id;
-    response = switchBoard.resumeConversation(receiverUserId, Number(id));
-    msg.send(response);
+    let resumedConversation = switchBoard.resumeConversation(receiverUserId, Number(id));
+    msg.send('resume conversation successfully');
   };
 
   robot.respond(/show conversation/i, showConversation);

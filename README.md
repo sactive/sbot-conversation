@@ -434,6 +434,17 @@ robot.respond(/foo/, function(msg){
 **[More Conversation Manager API](https://github.com/sactive/sbot-conversation/wiki/API#Dialog).**
 
 ### Conversation API
+
+**Conversation is an instance of an EventEmitter, It will emit an `end` event with `conversation.allAnswers` when the flow is done.**
+**It has two other events `expire` and `close`.**
+
+```javascript
+conversation.on('end', allAnswers => {
+  this.robot.logger.info(`Conversation: ${conversation.id} end`);
+  this.robot.logger.debug(allAnswers);
+});
+```
+
 #### addChoice()
 ```javascript
 addChoice(regex, handler)

@@ -99,13 +99,13 @@ Create a new `Dialog`.Inherits from ConversationManager.
 * [Dialog](#Dialog) ⇐ [<code>ConversationManager</code>](#new_ConversationManager_new)
     * [new Dialog#initSchema(name, schema)](#new_Dialog_new)
     * [.start(msg, conversationName, schema, expireTime)](#Dialog+start) ⇒ [<code>Conversation</code>](#Conversation)
-    * [.resumeConversation(receiverUserId, conversationId)](#ConversationManager+resumeConversation) ⇒ <code>String</code>
+    * [.resumeConversation(receiverUserId, conversationId)](#ConversationManager+resumeConversation) ⇒ <code>Object</code> \| [<code>Conversation</code>](#Conversation)
     * [.getConversations(receiverUserId)](#ConversationManager+getConversations) ⇒ [<code>Array.&lt;Conversation&gt;</code>](#Conversation)
     * [.getConversation(receiverUserId, conversationId)](#ConversationManager+getConversation) ⇒ [<code>Conversation</code>](#Conversation)
-    * [.cancelConversation(receiverUserId, conversationId, options)](#ConversationManager+cancelConversation) ⇒ <code>String</code>
-    * [.cancelConversations(receiverUserId)](#ConversationManager+cancelConversations) ⇒ <code>String</code>
+    * [.cancelConversation(receiverUserId, conversationId, options)](#ConversationManager+cancelConversation) ⇒ <code>Object</code> \| [<code>Conversation</code>](#Conversation)
+    * [.cancelConversations(receiverUserId)](#ConversationManager+cancelConversations) ⇒ <code>Array.&lt;Object&gt;</code>
     * [.getCurrentConversation(receiverUserId)](#ConversationManager+getCurrentConversation) ⇒ [<code>Conversation</code>](#Conversation) \| <code>Null</code>
-    * [.existsConversation(msg)](#ConversationManager+existsConversation)
+    * [.existsConversation(msg)](#ConversationManager+existsConversation) ⇒ <code>Boolean</code>
     * [.getId(msg)](#ConversationManager+getId) ⇒ <code>String</code>
 
 <a name="new_Dialog_new"></a>
@@ -136,11 +136,11 @@ Start a dialog.
 
 <a name="ConversationManager+resumeConversation"></a>
 
-### dialog.resumeConversation(receiverUserId, conversationId) ⇒ <code>String</code>
-Resume a conversation.
+### dialog.resumeConversation(receiverUserId, conversationId) ⇒ <code>Object</code> \| [<code>Conversation</code>](#Conversation)
+Resume a conversation of `receiverUserId`.
 
 **Kind**: instance method of [<code>Dialog</code>](#Dialog)  
-**Returns**: <code>String</code> - Returns resume conversation message.  
+**Returns**: <code>Object</code> \| [<code>Conversation</code>](#Conversation) - Returns result of the resume operation or the resumed conversation.  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -150,10 +150,10 @@ Resume a conversation.
 <a name="ConversationManager+getConversations"></a>
 
 ### dialog.getConversations(receiverUserId) ⇒ [<code>Array.&lt;Conversation&gt;</code>](#Conversation)
-Get all conversations.
+Get all conversations of `receiverUserId`.
 
 **Kind**: instance method of [<code>Dialog</code>](#Dialog)  
-**Returns**: [<code>Array.&lt;Conversation&gt;</code>](#Conversation) - Returns the conversations of `receiverUserId`.  
+**Returns**: [<code>Array.&lt;Conversation&gt;</code>](#Conversation) - Returns all conversations of `receiverUserId`.  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -162,7 +162,7 @@ Get all conversations.
 <a name="ConversationManager+getConversation"></a>
 
 ### dialog.getConversation(receiverUserId, conversationId) ⇒ [<code>Conversation</code>](#Conversation)
-Get a conversation.
+Get a conversation of `receiverUserId`.
 
 **Kind**: instance method of [<code>Dialog</code>](#Dialog)  
 **Returns**: [<code>Conversation</code>](#Conversation) - Returns the conversation.  
@@ -174,25 +174,25 @@ Get a conversation.
 
 <a name="ConversationManager+cancelConversation"></a>
 
-### dialog.cancelConversation(receiverUserId, conversationId, options) ⇒ <code>String</code>
-Cancel a conversation.
+### dialog.cancelConversation(receiverUserId, conversationId, options) ⇒ <code>Object</code> \| [<code>Conversation</code>](#Conversation)
+Cancel a conversation.If you canceled a active conversation, it will resume last pending conversation automatically.If there is no pending conversation, it will return a success result.Set options.single to be `false` will disable resume last pending conversation automatically.
 
 **Kind**: instance method of [<code>Dialog</code>](#Dialog)  
-**Returns**: <code>String</code> - Returns cancel conversation message.  
+**Returns**: <code>Object</code> \| [<code>Conversation</code>](#Conversation) - Returns result of the cancellation or the resumed conversation.  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | receiverUserId | <code>String</code> | `userId&roomId` or roomId. |
 | conversationId | <code>String</code> | conversation id. |
-| options | <code>Object</code> | cancel single, e.g. {single: true}. |
+| options | <code>Object</code> | default {single: true}, if resume last pending conversation automatically. |
 
 <a name="ConversationManager+cancelConversations"></a>
 
-### dialog.cancelConversations(receiverUserId) ⇒ <code>String</code>
-Cancel all conversations.
+### dialog.cancelConversations(receiverUserId) ⇒ <code>Array.&lt;Object&gt;</code>
+Cancel all conversations of `receiverUserId`.
 
 **Kind**: instance method of [<code>Dialog</code>](#Dialog)  
-**Returns**: <code>String</code> - Returns cancel all conversations message.  
+**Returns**: <code>Array.&lt;Object&gt;</code> - Returns all results of the cancellation.  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -201,7 +201,7 @@ Cancel all conversations.
 <a name="ConversationManager+getCurrentConversation"></a>
 
 ### dialog.getCurrentConversation(receiverUserId) ⇒ [<code>Conversation</code>](#Conversation) \| <code>Null</code>
-Get current active conversation.
+Get current active conversation of `receiverUserId`.
 
 **Kind**: instance method of [<code>Dialog</code>](#Dialog)  
 **Returns**: [<code>Conversation</code>](#Conversation) \| <code>Null</code> - Returns current conversation.  
@@ -212,10 +212,11 @@ Get current active conversation.
 
 <a name="ConversationManager+existsConversation"></a>
 
-### dialog.existsConversation(msg)
+### dialog.existsConversation(msg) ⇒ <code>Boolean</code>
 Exists conversations.
 
 **Kind**: instance method of [<code>Dialog</code>](#Dialog)  
+**Returns**: <code>Boolean</code> - true or false.  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -224,7 +225,7 @@ Exists conversations.
 <a name="ConversationManager+getId"></a>
 
 ### dialog.getId(msg) ⇒ <code>String</code>
-Get all conversations.
+Get `receiverUserId`.
 
 **Kind**: instance method of [<code>Dialog</code>](#Dialog)  
 **Returns**: <code>String</code> - receiverUserId - `userId&roomId` or roomId.  
@@ -241,13 +242,13 @@ Get all conversations.
 * [Dialog](#Dialog)
     * [new Dialog#initSchema(name, schema)](#new_Dialog_new)
     * [.start(msg, conversationName, schema, expireTime)](#Dialog+start) ⇒ [<code>Conversation</code>](#Conversation)
-    * [.resumeConversation(receiverUserId, conversationId)](#ConversationManager+resumeConversation) ⇒ <code>String</code>
+    * [.resumeConversation(receiverUserId, conversationId)](#ConversationManager+resumeConversation) ⇒ <code>Object</code> \| [<code>Conversation</code>](#Conversation)
     * [.getConversations(receiverUserId)](#ConversationManager+getConversations) ⇒ [<code>Array.&lt;Conversation&gt;</code>](#Conversation)
     * [.getConversation(receiverUserId, conversationId)](#ConversationManager+getConversation) ⇒ [<code>Conversation</code>](#Conversation)
-    * [.cancelConversation(receiverUserId, conversationId, options)](#ConversationManager+cancelConversation) ⇒ <code>String</code>
-    * [.cancelConversations(receiverUserId)](#ConversationManager+cancelConversations) ⇒ <code>String</code>
+    * [.cancelConversation(receiverUserId, conversationId, options)](#ConversationManager+cancelConversation) ⇒ <code>Object</code> \| [<code>Conversation</code>](#Conversation)
+    * [.cancelConversations(receiverUserId)](#ConversationManager+cancelConversations) ⇒ <code>Array.&lt;Object&gt;</code>
     * [.getCurrentConversation(receiverUserId)](#ConversationManager+getCurrentConversation) ⇒ [<code>Conversation</code>](#Conversation) \| <code>Null</code>
-    * [.existsConversation(msg)](#ConversationManager+existsConversation)
+    * [.existsConversation(msg)](#ConversationManager+existsConversation) ⇒ <code>Boolean</code>
     * [.getId(msg)](#ConversationManager+getId) ⇒ <code>String</code>
 
 <a name="new_Dialog_new"></a>
@@ -278,11 +279,11 @@ Start a dialog.
 
 <a name="ConversationManager+resumeConversation"></a>
 
-### dialog.resumeConversation(receiverUserId, conversationId) ⇒ <code>String</code>
-Resume a conversation.
+### dialog.resumeConversation(receiverUserId, conversationId) ⇒ <code>Object</code> \| [<code>Conversation</code>](#Conversation)
+Resume a conversation of `receiverUserId`.
 
 **Kind**: instance method of [<code>Dialog</code>](#Dialog)  
-**Returns**: <code>String</code> - Returns resume conversation message.  
+**Returns**: <code>Object</code> \| [<code>Conversation</code>](#Conversation) - Returns result of the resume operation or the resumed conversation.  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -292,10 +293,10 @@ Resume a conversation.
 <a name="ConversationManager+getConversations"></a>
 
 ### dialog.getConversations(receiverUserId) ⇒ [<code>Array.&lt;Conversation&gt;</code>](#Conversation)
-Get all conversations.
+Get all conversations of `receiverUserId`.
 
 **Kind**: instance method of [<code>Dialog</code>](#Dialog)  
-**Returns**: [<code>Array.&lt;Conversation&gt;</code>](#Conversation) - Returns the conversations of `receiverUserId`.  
+**Returns**: [<code>Array.&lt;Conversation&gt;</code>](#Conversation) - Returns all conversations of `receiverUserId`.  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -304,7 +305,7 @@ Get all conversations.
 <a name="ConversationManager+getConversation"></a>
 
 ### dialog.getConversation(receiverUserId, conversationId) ⇒ [<code>Conversation</code>](#Conversation)
-Get a conversation.
+Get a conversation of `receiverUserId`.
 
 **Kind**: instance method of [<code>Dialog</code>](#Dialog)  
 **Returns**: [<code>Conversation</code>](#Conversation) - Returns the conversation.  
@@ -316,25 +317,25 @@ Get a conversation.
 
 <a name="ConversationManager+cancelConversation"></a>
 
-### dialog.cancelConversation(receiverUserId, conversationId, options) ⇒ <code>String</code>
-Cancel a conversation.
+### dialog.cancelConversation(receiverUserId, conversationId, options) ⇒ <code>Object</code> \| [<code>Conversation</code>](#Conversation)
+Cancel a conversation.If you canceled a active conversation, it will resume last pending conversation automatically.If there is no pending conversation, it will return a success result.Set options.single to be `false` will disable resume last pending conversation automatically.
 
 **Kind**: instance method of [<code>Dialog</code>](#Dialog)  
-**Returns**: <code>String</code> - Returns cancel conversation message.  
+**Returns**: <code>Object</code> \| [<code>Conversation</code>](#Conversation) - Returns result of the cancellation or the resumed conversation.  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | receiverUserId | <code>String</code> | `userId&roomId` or roomId. |
 | conversationId | <code>String</code> | conversation id. |
-| options | <code>Object</code> | cancel single, e.g. {single: true}. |
+| options | <code>Object</code> | default {single: true}, if resume last pending conversation automatically. |
 
 <a name="ConversationManager+cancelConversations"></a>
 
-### dialog.cancelConversations(receiverUserId) ⇒ <code>String</code>
-Cancel all conversations.
+### dialog.cancelConversations(receiverUserId) ⇒ <code>Array.&lt;Object&gt;</code>
+Cancel all conversations of `receiverUserId`.
 
 **Kind**: instance method of [<code>Dialog</code>](#Dialog)  
-**Returns**: <code>String</code> - Returns cancel all conversations message.  
+**Returns**: <code>Array.&lt;Object&gt;</code> - Returns all results of the cancellation.  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -343,7 +344,7 @@ Cancel all conversations.
 <a name="ConversationManager+getCurrentConversation"></a>
 
 ### dialog.getCurrentConversation(receiverUserId) ⇒ [<code>Conversation</code>](#Conversation) \| <code>Null</code>
-Get current active conversation.
+Get current active conversation of `receiverUserId`.
 
 **Kind**: instance method of [<code>Dialog</code>](#Dialog)  
 **Returns**: [<code>Conversation</code>](#Conversation) \| <code>Null</code> - Returns current conversation.  
@@ -354,10 +355,11 @@ Get current active conversation.
 
 <a name="ConversationManager+existsConversation"></a>
 
-### dialog.existsConversation(msg)
+### dialog.existsConversation(msg) ⇒ <code>Boolean</code>
 Exists conversations.
 
 **Kind**: instance method of [<code>Dialog</code>](#Dialog)  
+**Returns**: <code>Boolean</code> - true or false.  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -366,7 +368,7 @@ Exists conversations.
 <a name="ConversationManager+getId"></a>
 
 ### dialog.getId(msg) ⇒ <code>String</code>
-Get all conversations.
+Get `receiverUserId`.
 
 **Kind**: instance method of [<code>Dialog</code>](#Dialog)  
 **Returns**: <code>String</code> - receiverUserId - `userId&roomId` or roomId.  
