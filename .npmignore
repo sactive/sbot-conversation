@@ -1,0 +1,12 @@
+/docs/
+/node_modules/
+/test/
+/log/
+/packages/
+/train/
+.idea
+*.env
+*.log
+docs.sh
+package-lock.json
+*.lock
