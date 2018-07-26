@@ -16,7 +16,7 @@ describe('manager tests', function () {
   describe('conversation manager tests', function () {
     it('show conversation without id', function (done) {
       room.user.say(userName, '@hubot create user').then(function () {
-        room.user.say(userName, '@hubot show conversation').then(() => {
+        room.user.say(userName, '@hubot show conversation').then(function() {
           expect(room.messages[3][1]).to.have.property('name', 'create user');
           expect(room.messages[3][1]).to.have.property('status', 'active');
           done();
@@ -26,8 +26,8 @@ describe('manager tests', function () {
 
     it('show conversation with error id', function (done) {
       room.user.say(userName, '@hubot create user').then(function () {
-        room.user.say(userName, '@hubot show conversation 666').then(() => {
-          expect(room.messages[3][1]).to.have.string('Cannot find conversation: 666.');
+        room.user.say(userName, '@hubot show conversation 666').then(function() {
+          expect(room.messages[4][1]).to.have.string('Cannot find conversation: 666.');
           done();
         });
       });
@@ -35,13 +35,13 @@ describe('manager tests', function () {
 
     it('show conversation with correct id', function (done) {
       room.user.say(userName, '@hubot create user').then(function () {
-        room.user.say(userName, '@hubot show conversation').then(() => {
-          expect(room.messages[3][1]).to.have.property('name', 'create user');
-          let id = room.messages[3][1].id;
-          room.user.say(userName, `@hubot show conversation ${id}`).then(() => {
-            expect(room.messages[3][1]).to.have.property('name', 'create user');
-            expect(room.messages[3][1]).to.have.property('status', 'active');
-            expect(room.messages[3][1]).to.have.property('id', id);
+        room.user.say(userName, '@hubot show conversation').then(function() {
+          expect(room.messages[4][1]).to.have.property('name', 'create user');
+          let id = room.messages[4][1].id;
+          room.user.say(userName, `@hubot show conversation ${id}`).then(function() {
+            expect(room.messages[4][1]).to.have.property('name', 'create user');
+            expect(room.messages[4][1]).to.have.property('status', 'active');
+            expect(room.messages[4][1]).to.have.property('id', id);
             done();
           });
         });
@@ -51,7 +51,7 @@ describe('manager tests', function () {
     it('show conversation all', function (done) {
       room.user.say(userName, '@hubot create user').then(function () {
         room.user.say(userName, '@hubot show conversation all').then(() => {
-          expect(room.messages[3][1]).to.be.an('array');
+          expect(room.messages[4][1]).to.be.an('array');
           done();
         });
       });
@@ -59,8 +59,8 @@ describe('manager tests', function () {
 
     it('cancel conversation all', function (done) {
       room.user.say(userName, '@hubot create user').then(function () {
-        room.user.say(userName, '@hubot cancel conversation all').then(() => {
-          expect(room.messages[3][1]).to.have.string('cancel conversation successfully');
+        room.user.say(userName, '@hubot cancel conversation all').then(function() {
+          expect(room.messages[4][1]).to.have.string('cancel conversation successfully');
           done();
         });
       });
@@ -71,7 +71,7 @@ describe('manager tests', function () {
         room.user.say(userName, '@hubot show conversation').then(() => {
           expect(room.messages[3][1]).to.have.property('name', 'create user');
           let id = room.messages[3][1].id;
-          room.user.say(userName, `@hubot resume conversation ${id}`).then(() => {
+          room.user.say(userName, `@hubot resume conversation ${id}`).then(function() {
             expect(room.messages[5][1]).to.have.string('resume conversation successfully');
             done();
           });
