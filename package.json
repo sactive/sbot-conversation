@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sactive/sbot-conversation.git"
+    "url": "git+https://github.com/shipengqi/sbot-conversation.git"
   },
   "keywords": [
     "hubot",
@@ -26,9 +26,9 @@
   "author": "Pooky",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/sactive/sbot-conversation/issues"
+    "url": "https://github.com/shipengqi/sbot-conversation/issues"
   },
-  "homepage": "https://github.com/sactive/sbot-conversation#readme",
+  "homepage": "https://github.com/shipengqi/sbot-conversation#readme",
   "dependencies": {
     "async-series": "0.0.1",
     "extend": "^3.0.1",

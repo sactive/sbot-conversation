@@ -1,5 +1,5 @@
 # sbot-conversation
-A conversation implement for [hubot](https://github.com/hubotio/hubot).
+A conversation implement for [Hubot](https://github.com/hubotio/hubot).
 
 [![Build status][travis-image]][travis-url]
 [![Coverage][cov-image]][cov-url]
@@ -378,11 +378,11 @@ module.exports = function(robot) {
 };
 ```
 
-**[More Conversation manage Examples](https://github.com/sactive/sbot-conversation/wiki/Example).**
+**[More Conversation manage Examples](https://github.com/shipengqi/sbot-conversation/wiki/Example).**
 
 ## API
 
-- [API documentation](https://github.com/sactive/sbot-conversation/wiki/API)
+- [API documentation](https://github.com/shipengqi/sbot-conversation/wiki/API)
 
 ### Conversation Manager API
 #### initManager()
@@ -431,7 +431,7 @@ robot.respond(/foo/, function(msg){
 })
 ```
 
-**[More Conversation Manager API](https://github.com/sactive/sbot-conversation/wiki/API#Dialog).**
+**[More Conversation Manager API](https://github.com/shipengqi/sbot-conversation/wiki/API#Dialog).**
 
 ### Conversation API
 
@@ -483,10 +483,10 @@ Emit an close event with all all answers, and close the current conversation.
 
 [npm-image]: https://img.shields.io/npm/v/sbot-conversation.svg
 [npm-url]: https://www.npmjs.com/package/sbot-conversation
-[travis-image]: https://travis-ci.org/sactive/sbot-conversation.svg?branch=master
-[travis-url]: https://www.travis-ci.org/sactive/sbot-conversation
-[cov-image]: https://codecov.io/gh/sactive/sbot-conversation/branch/master/graph/badge.svg
-[cov-url]: https://codecov.io/gh/sactive/sbot-conversation
+[travis-image]: https://travis-ci.org/shipengqi/sbot-conversation.svg?branch=master
+[travis-url]: https://www.travis-ci.org/shipengqi/sbot-conversation
+[cov-image]: https://codecov.io/gh/shipengqi/sbot-conversation/branch/master/graph/badge.svg
+[cov-url]: https://codecov.io/gh/shipengqi/sbot-conversation
 [license-image]: http://img.shields.io/npm/l/sbot-conversation.svg
 [license-url]: ./LICENSE
 
