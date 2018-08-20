@@ -4,6 +4,7 @@ A conversation implement for [Hubot](https://github.com/hubotio/hubot).
 [![Build status][travis-image]][travis-url]
 [![Coverage][cov-image]][cov-url]
 [![NPM version][npm-image]][npm-url]
+[![NPM Download][npm-download]][npm-url]
 [![License][license-image]][license-url]
 
 [![NPM](https://nodei.co/npm/sbot-conversation.png?downloads=true)](https://nodei.co/npm/sbot-conversation/)
@@ -487,6 +488,7 @@ Emit an close event with all all answers, and close the current conversation.
 [travis-url]: https://www.travis-ci.org/shipengqi/sbot-conversation
 [cov-image]: https://codecov.io/gh/shipengqi/sbot-conversation/branch/master/graph/badge.svg
 [cov-url]: https://codecov.io/gh/shipengqi/sbot-conversation
+[npm-download]: https://img.shields.io/npm/dw/sbot-conversation.svg
 [license-image]: http://img.shields.io/npm/l/sbot-conversation.svg
 [license-url]: ./LICENSE
 
