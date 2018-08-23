@@ -1,7 +1,7 @@
 {
   "name": "sbot-conversation",
-  "version": "1.5.2",
-  "description": "A conversation implement for hubot",
+  "version": "1.5.3",
+  "description": "A conversation implement for Hubot",
   "main": "./lib",
   "scripts": {
     "lint": "eslint .",
@@ -18,10 +18,15 @@
   "keywords": [
     "hubot",
     "conversation",
-    "session",
     "chatops",
     "chatbot",
-    "bot"
+    "bot",
+    "sactive-bot",
+    "slack",
+    "mattermost",
+    "wechat",
+    "weixin",
+    "microsoft teams"
   ],
   "author": "Pooky",
   "license": "MIT",
